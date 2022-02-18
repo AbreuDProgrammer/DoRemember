@@ -11,12 +11,11 @@ $(document).ready(function(){
 var intervalo;
 var time = 0;
 function mostrarSequencia(){
-    var h1 = $("#h1C");
     if(time<alternativas){
-        $(h1).html(correto[time++]);
+        $("#h1C").html(correto[time++]);
     }
     else{
-        $(h1).html("");
+        $("#h1C").html("");
         clearInterval(intervalo);
         time = 0;
         $(".botoes").prop('disabled', false);
@@ -57,14 +56,13 @@ function cliqueBotoes(){
 }
 //compara os resultados
 function compara(){
-    var h1 = $("#h1C");
     var respostaString = resposta.toString();
     var corretoString = correto.toString();
     if(respostaString==corretoString){
         alternativas++;
         comeca();
     }else
-        $(h1).html("Você Perdeu!!!");
+        perdi();
 }
 //manipular functions
 function comeca(){
@@ -73,4 +71,12 @@ function comeca(){
     criarSequencia();
     criarBotoes();
     intervalo = setInterval(mostrarSequencia, 1000);
+}
+//caso perca
+function perdi(){
+    alternativas = 3;
+    $("#h1C").html("Você Perdeu!!!");
+    var button = $("<button></button>").attr("id","restart").html("Restart");
+    $("#divBotoes").append(button);
+    $("#restart").click(comeca);
 }
